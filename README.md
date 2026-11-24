@@ -1,5 +1,8 @@
 # Simulador de Seguridad en Cuestionarios Moodle
 
+> 🌐 **Demo en vivo (GitHub Pages):** [https://martinvarela206.github.io/moodle-quiz-security-simulator/](https://martinvarela206.github.io/moodle-quiz-security-simulator/)  
+> 📦 **Repositorio en GitHub:** [https://github.com/martinvarela206/moodle-quiz-security-simulator](https://github.com/martinvarela206/moodle-quiz-security-simulator)
+
 Aplicación web estática y ligera desarrollada en HTML5, CSS3 y Vanilla JavaScript puro (sin frameworks ni bundlers, 100% compatible con GitHub Pages) que replica el comportamiento exacto de la opción nativa de Moodle: **"Ventana emergente a pantalla completa con alguna seguridad JavaScript"** (*Full screen pop-up with some JavaScript security*).
 
 Permite auditar el comportamiento de los navegadores ante ventanas emergentes restringidas, comprobar si los bloqueadores de pop-ups impiden el acceso a los exámenes, verificar la efectividad de las restricciones del portapapeles y evaluar en tiempo real si el cambio de foco o el uso de múltiples pantallas dispara eventos de pérdida de foco (`blur` y `visibilitychange`).
