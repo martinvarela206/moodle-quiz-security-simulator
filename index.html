@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Seguridad en Cuestionarios Moodle</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body id="moodle-index-page">
+
+  <!-- Barra Superior / Navbar de Moodle Boost -->
+  <header class="moodle-navbar">
+    <a href="./index.html" class="moodle-navbar-brand">
+      <div class="moodle-logo-icon">m</div>
+      <span>Moodle Quiz Simulator</span>
+    </a>
+    <div class="moodle-navbar-actions">
+      <div class="user-badge">
+        <div class="user-avatar">ES</div>
+        <span>Estudiante de Prueba</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Migas de Pan (Breadcrumbs) -->
+  <nav class="moodle-breadcrumbs" aria-label="Navegación de migas de pan">
+    <ul class="breadcrumb-list">
+      <li><a href="./index.html">Página Principal</a></li>
+      <li><a href="./index.html">Mis cursos</a></li>
+      <li><a href="./index.html">SEG-2026: Auditoría de Seguridad Web</a></li>
+      <li><a href="./index.html">Evaluaciones</a></li>
+      <li aria-current="page">Simulador de Ventana Emergente Segura</li>
+    </ul>
+  </nav>
+
+  <!-- Contenedor Principal -->
+  <main class="main-container">
+
+    <!-- Alerta de Pop-up Bloqueado (Moodle Error Banner) -->
+    <section id="popup-blocked-alert" class="popup-blocked-modal" role="alert" aria-live="assertive">
+      <div class="popup-blocked-header">
+        <span>⚠️</span>
+        <span>Ventana emergente bloqueada por el navegador</span>
+      </div>
+      <p>
+        El navegador impidió abrir la ventana segura del cuestionario. Para resolver este examen, debe permitir las ventanas emergentes en este sitio:
+      </p>
+      <ol class="instructions-steps">
+        <li>Mire el extremo derecho de la barra de direcciones de su navegador (URL).</li>
+        <li>Haga clic en el icono de <strong>Ventana emergente bloqueada</strong> (suele ser una ventana con una cruz roja o un icono de aviso).</li>
+        <li>Seleccione la opción <strong>"Permitir siempre ventanas emergentes y redirecciones de este sitio"</strong>.</li>
+        <li>Haga clic en <strong>"Listo"</strong> y vuelva a pulsar el botón <em>"Intentar resolver el cuestionario"</em>.</li>
+      </ol>
+      <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.75rem;">
+        <button id="btn-dismiss-alert" type="button" class="btn-moodle btn-moodle-secondary btn-sm">Cerrar advertencia</button>
+      </div>
+    </section>
+
+    <!-- Tarjeta Principal del Cuestionario -->
+    <article class="moodle-card">
+      <header class="moodle-card-header">
+        <h1>Evaluación de Seguridad Web: Modo Seguro Moodle</h1>
+      </header>
+
+      <div class="moodle-card-body">
+        
+        <!-- Aviso de Seguridad Nativo de Moodle -->
+        <div class="alert-box alert-warning">
+          <div class="alert-box-icon">🔒</div>
+          <div>
+            <strong>Aviso de seguridad del examen:</strong><br>
+            Este cuestionario se configuró con la opción nativa de Moodle 
+            <em>"Ventana emergente a pantalla completa con alguna seguridad JavaScript"</em> 
+            (<code>full screen pop-up with some JavaScript security</code>). Al iniciar, se abrirá en una ventana emergente que ocupa toda la pantalla disponible, sin barras de navegación del navegador, deshabilitando el menú contextual y el portapapeles.
+          </div>
+        </div>
+
+        <!-- Tabla Informativa de Parámetros del Examen -->
+        <table class="quiz-summary-table">
+          <tbody>
+            <tr>
+              <th scope="row">Intentos permitidos</th>
+              <td>1 intento</td>
+            </tr>
+            <tr>
+              <th scope="row">Límite de tiempo</th>
+              <td>15 minutos</td>
+            </tr>
+            <tr>
+              <th scope="row">Método de calificación</th>
+              <td>Calificación más alta</td>
+            </tr>
+            <tr>
+              <th scope="row">Nivel de seguridad requerido</th>
+              <td>Ventana emergente segura + JavaScript activado</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Comprobador Previo de Permisos de Ventanas Emergentes -->
+        <div class="tester-card">
+          <div class="tester-status-row">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem;">
+                Diagnóstico de compatibilidad de ventanas emergentes:
+              </div>
+              <div class="status-indicator">
+                <span id="popup-status-indicator" class="status-dot dot-pending"></span>
+                <span id="popup-status-text" style="color: var(--moodle-text-muted);">Haga una verificación previa antes de iniciar</span>
+              </div>
+            </div>
+            <div>
+              <button id="btn-test-popup" type="button" class="btn-moodle btn-moodle-secondary btn-sm">
+                🔍 Comprobar permisos ahora
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de Inicio del Examen -->
+        <div style="text-align: center; margin: 2rem 0 1rem 0;">
+          <button id="btn-start-quiz" type="button" class="btn-moodle btn-moodle-primary btn-large">
+            <span>🚀</span>
+            <span>Intentar resolver el cuestionario</span>
+          </button>
+          <div style="font-size: 0.8rem; color: var(--moodle-text-muted); margin-top: 0.6rem;">
+            Se ejecutará <code>window.open('exam.html', 'MoodleQuizPopup', ...)</code> con parámetros de Moodle.
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- Tarjeta Didáctica: Qué simula esta herramienta -->
+    <article class="moodle-card">
+      <header class="moodle-card-header">
+        <h2>¿Qué pone a prueba este simulador?</h2>
+      </header>
+      <div class="moodle-card-body" style="font-size: 0.9rem; color: #495057;">
+        <p style="margin-bottom: 0.75rem;">
+          En la plataforma educativa Moodle, la opción de seguridad JavaScript para exámenes intenta restringir acciones como copiar texto, imprimir o abrir herramientas de desarrollador mediante scripts en el cliente.
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          Este entorno permite a docentes, administradores y estudiantes analizar:
+        </p>
+        <ul style="padding-left: 1.25rem; margin-bottom: 0.75rem;">
+          <li>Si las políticas del navegador moderno bloquean la apertura de pop-ups no solicitados.</li>
+          <li>Cómo se comportan los atajos del sistema operativo y si los bloqueos de JavaScript son realmente infalibles.</li>
+          <li>Cómo reacciona el navegador cuando se trabaja con <strong>múltiples pantallas</strong>: si mover el cursor o hacer scroll en un segundo monitor dispara eventos <code>blur</code> o mantiene el foco en la ventana del examen.</li>
+        </ul>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Pie de página de Moodle -->
+  <footer class="moodle-footer">
+    <p>Simulador de Examen Seguro Moodle • Vanilla HTML5 / CSS3 / JavaScript puro • Compatible con GitHub Pages</p>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
