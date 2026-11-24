@@ -3,159 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Seguridad en Cuestionarios Moodle</title>
+  <title>Verificador de Ventanas Emergentes - Cursillo UNSJ (SIED)</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body id="moodle-index-page">
+<body id="moodle-student-page">
 
-  <!-- Barra Superior / Navbar de Moodle Boost -->
-  <header class="moodle-navbar">
-    <a href="./index.html" class="moodle-navbar-brand">
-      <div class="moodle-logo-icon">m</div>
-      <span>Moodle Quiz Simulator</span>
-    </a>
-    <div class="moodle-navbar-actions">
-      <div class="user-badge">
-        <div class="user-avatar">ES</div>
-        <span>Estudiante de Prueba</span>
+  <!-- Header Institucional Amigable -->
+  <header class="portal-brand-header">
+    <div class="portal-brand-left">
+      <span class="unsj-badge">UNSJ</span>
+      <div class="portal-title-block">
+        <h1>Campus Virtual SIED • Cursillo de Ingreso</h1>
+        <p>Verificador de compatibilidad para el examen</p>
       </div>
+    </div>
+    <div>
+      <span style="font-size: 0.8rem; background: #e2e8f0; color: #475569; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 600;">
+        Guía de Ayuda al Estudiante
+      </span>
     </div>
   </header>
 
-  <!-- Migas de Pan (Breadcrumbs) -->
-  <nav class="moodle-breadcrumbs" aria-label="Navegación de migas de pan">
-    <ul class="breadcrumb-list">
-      <li><a href="./index.html">Página Principal</a></li>
-      <li><a href="./index.html">Mis cursos</a></li>
-      <li><a href="./index.html">SEG-2026: Auditoría de Seguridad Web</a></li>
-      <li><a href="./index.html">Evaluaciones</a></li>
-      <li aria-current="page">Simulador de Ventana Emergente Segura</li>
-    </ul>
-  </nav>
+  <div class="student-portal-wrapper">
 
-  <!-- Contenedor Principal -->
-  <main class="main-container">
-
-    <!-- Alerta de Pop-up Bloqueado (Moodle Error Banner) -->
-    <section id="popup-blocked-alert" class="popup-blocked-modal" role="alert" aria-live="assertive">
-      <div class="popup-blocked-header">
-        <span>⚠️</span>
-        <span>Ventana emergente bloqueada por el navegador</span>
-      </div>
-      <p>
-        El navegador impidió abrir la ventana segura del cuestionario. Para resolver este examen, debe permitir las ventanas emergentes en este sitio:
-      </p>
-      <ol class="instructions-steps">
-        <li>Mire el extremo derecho de la barra de direcciones de su navegador (URL).</li>
-        <li>Haga clic en el icono de <strong>Ventana emergente bloqueada</strong> (suele ser una ventana con una cruz roja o un icono de aviso).</li>
-        <li>Seleccione la opción <strong>"Permitir siempre ventanas emergentes y redirecciones de este sitio"</strong>.</li>
-        <li>Haga clic en <strong>"Listo"</strong> y vuelva a pulsar el botón <em>"Intentar resolver el cuestionario"</em>.</li>
-      </ol>
-      <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.75rem;">
-        <button id="btn-dismiss-alert" type="button" class="btn-moodle btn-moodle-secondary btn-sm">Cerrar advertencia</button>
+    <!-- 1. Cartel Anti-Pánico y Claridad Absoluta -->
+    <section class="anti-panic-banner" role="status">
+      <div class="anti-panic-icon">🛡️</div>
+      <div class="anti-panic-content">
+        <h2>Herramienta de Prueba Previa (No es el examen real)</h2>
+        <p>
+          Esta página es una <strong>herramienta de prueba</strong> para que verifiques si tu navegador está listo antes del día del examen. 
+          <strong>No tiene calificación, no guarda datos y no hay preguntas reales que debas contestar.</strong>
+        </p>
       </div>
     </section>
 
-    <!-- Tarjeta Principal del Cuestionario -->
-    <article class="moodle-card">
-      <header class="moodle-card-header">
-        <h1>Evaluación de Seguridad Web: Modo Seguro Moodle</h1>
-      </header>
+    <!-- 2. Aviso para personas que entran desde el celular -->
+    <section class="mobile-notice-box" role="note">
+      <div style="font-size: 1.4rem; line-height: 1;">📱</div>
+      <div>
+        <h3>¿Estás probando desde un teléfono celular?</h3>
+        <p>
+          Podés hacer la prueba de ventana emergente acá, pero recordá que <strong>el día del examen oficial deberás rendir obligatoriamente desde una computadora (PC o Notebook)</strong>. En el teléfono no vas a poder realizar el cuestionario con la comodidad ni la seguridad que exige la plataforma.
+        </p>
+      </div>
+    </section>
 
-      <div class="moodle-card-body">
-        
-        <!-- Aviso de Seguridad Nativo de Moodle -->
-        <div class="alert-box alert-warning">
-          <div class="alert-box-icon">🔒</div>
-          <div>
-            <strong>Aviso de seguridad del examen:</strong><br>
-            Este cuestionario se configuró con la opción nativa de Moodle 
-            <em>"Ventana emergente a pantalla completa con alguna seguridad JavaScript"</em> 
-            (<code>full screen pop-up with some JavaScript security</code>). Al iniciar, se abrirá en una ventana emergente que ocupa toda la pantalla disponible, sin barras de navegación del navegador, deshabilitando el menú contextual y el portapapeles.
+    <!-- 3. Tarjeta Principal de Prueba -->
+    <main class="hero-test-card">
+      <h2>Comprobá si tu navegador abre el examen</h2>
+      
+      <p class="hero-description">
+        El cuestionario se abrirá en una <strong>ventana emergente a pantalla completa</strong>. Antes de comenzar, asegurate de tener habilitadas las ventanas emergentes (pop-ups) para el Campus Virtual.
+      </p>
+
+      <!-- Botón Gigante de Prueba -->
+      <div>
+        <button id="btn-test-student" type="button" class="btn-hero-test">
+          <span>🚀</span>
+          <span>Probar si mi navegador abre el examen</span>
+        </button>
+        <div class="btn-hero-subtext">
+          Al presionar, intentaremos abrir una ventana emergente de muestra para comprobar tu configuración.
+        </div>
+      </div>
+
+      <!-- Mensaje de Éxito al Abrir la Ventana -->
+      <div id="student-success-banner" class="success-open-banner" role="alert">
+        <div style="font-size: 1.3rem;">🎉</div>
+        <div>
+          <strong>¡Excelente! La ventana emergente se abrió correctamente.</strong><br>
+          <span style="font-size: 0.88rem;">
+            Tu navegador está perfectamente configurado y vas a poder entrar a rendir el cuestionario en el Campus Virtual sin bloqueos.
+          </span>
+        </div>
+      </div>
+
+      <!-- Alerta Paso a Paso si el Navegador Bloquea la Ventana -->
+      <section id="student-blocked-card" class="friendly-blocked-card" role="alert">
+        <div class="friendly-blocked-title">
+          <span>⚠️</span>
+          <span>El navegador bloqueó la ventana emergente</span>
+        </div>
+        <p style="font-size: 0.92rem; color: #4c0519; margin-bottom: 0.75rem;">
+          No te preocupes, esto es normal. Tu navegador tiene activado el bloqueador automático. Seguí estos 3 pasos para solucionarlo en 10 segundos:
+        </p>
+
+        <div class="friendly-steps-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-text">
+              <strong>Hacé clic en el ícono de ventana bloqueada:</strong> Mirá arriba, en el extremo derecho de la barra donde está escrita la dirección de la página (verás un ícono con una pequeña cruz roja o una ventana emergente).
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-text">
+              <strong>Seleccioná:</strong> La opción que dice <em>“Permitir siempre ventanas emergentes y redirecciones de este sitio”</em> y presioná <strong>Listo</strong>.
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-text">
+              <strong>Volvé a probar:</strong> Presioná nuevamente el botón verde <em>“Probar si mi navegador abre el examen”</em> de aquí arriba.
+            </div>
           </div>
         </div>
 
-        <!-- Tabla Informativa de Parámetros del Examen -->
-        <table class="quiz-summary-table">
-          <tbody>
-            <tr>
-              <th scope="row">Intentos permitidos</th>
-              <td>1 intento</td>
-            </tr>
-            <tr>
-              <th scope="row">Límite de tiempo</th>
-              <td>15 minutos</td>
-            </tr>
-            <tr>
-              <th scope="row">Método de calificación</th>
-              <td>Calificación más alta</td>
-            </tr>
-            <tr>
-              <th scope="row">Nivel de seguridad requerido</th>
-              <td>Ventana emergente segura + JavaScript activado</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Comprobador Previo de Permisos de Ventanas Emergentes -->
-        <div class="tester-card">
-          <div class="tester-status-row">
-            <div>
-              <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem;">
-                Diagnóstico de compatibilidad de ventanas emergentes:
-              </div>
-              <div class="status-indicator">
-                <span id="popup-status-indicator" class="status-dot dot-pending"></span>
-                <span id="popup-status-text" style="color: var(--moodle-text-muted);">Haga una verificación previa antes de iniciar</span>
-              </div>
-            </div>
-            <div>
-              <button id="btn-test-popup" type="button" class="btn-moodle btn-moodle-secondary btn-sm">
-                🔍 Comprobar permisos ahora
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón de Inicio del Examen -->
-        <div style="text-align: center; margin: 2rem 0 1rem 0;">
-          <button id="btn-start-quiz" type="button" class="btn-moodle btn-moodle-primary btn-large">
-            <span>🚀</span>
-            <span>Intentar resolver el cuestionario</span>
+        <div style="text-align: right; margin-top: 0.5rem;">
+          <button id="btn-dismiss-student-alert" type="button" class="btn-moodle btn-moodle-secondary btn-sm">
+            Entendido, cerrar este aviso
           </button>
-          <div style="font-size: 0.8rem; color: var(--moodle-text-muted); margin-top: 0.6rem;">
-            Se ejecutará <code>window.open('exam.html', 'MoodleQuizPopup', ...)</code> con parámetros de Moodle.
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 4. Recomendaciones Oficiales para el Día del Examen -->
+    <section class="recommendations-section">
+      <h2>
+        <span>💻</span>
+        <span>Recomendaciones clave para el día del examen</span>
+      </h2>
+      <div class="recommendations-grid">
+        <div class="rec-card">
+          <div class="rec-icon">🖥️</div>
+          <div class="rec-title">Rendí desde una computadora</div>
+          <div class="rec-desc">
+            Utilizá una PC o Notebook con navegadores actualizados: <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong> o <strong>Mozilla Firefox</strong>. Evitá celulares o tablets.
           </div>
         </div>
 
+        <div class="rec-card">
+          <div class="rec-icon">🌐</div>
+          <div class="rec-title">Conexión a internet estable</div>
+          <div class="rec-desc">
+            Asegurate de contar con una buena señal de Wi-Fi o conectate por cable de red para evitar interrupciones durante el intento.
+          </div>
+        </div>
+
+        <div class="rec-card">
+          <div class="rec-icon">🔌</div>
+          <div class="rec-title">Batería y tranquilidad</div>
+          <div class="rec-desc">
+            Si usás notebook, tenela conectada a la corriente eléctrica y cerrá programas pesados, juegos o descargas antes de empezar.
+          </div>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <!-- Tarjeta Didáctica: Qué simula esta herramienta -->
-    <article class="moodle-card">
-      <header class="moodle-card-header">
-        <h2>¿Qué pone a prueba este simulador?</h2>
-      </header>
-      <div class="moodle-card-body" style="font-size: 0.9rem; color: #495057;">
-        <p style="margin-bottom: 0.75rem;">
-          En la plataforma educativa Moodle, la opción de seguridad JavaScript para exámenes intenta restringir acciones como copiar texto, imprimir o abrir herramientas de desarrollador mediante scripts en el cliente.
-        </p>
-        <p style="margin-bottom: 0.75rem;">
-          Este entorno permite a docentes, administradores y estudiantes analizar:
-        </p>
-        <ul style="padding-left: 1.25rem; margin-bottom: 0.75rem;">
-          <li>Si las políticas del navegador moderno bloquean la apertura de pop-ups no solicitados.</li>
-          <li>Cómo se comportan los atajos del sistema operativo y si los bloqueos de JavaScript son realmente infalibles.</li>
-          <li>Cómo reacciona el navegador cuando se trabaja con <strong>múltiples pantallas</strong>: si mover el cursor o hacer scroll en un segundo monitor dispara eventos <code>blur</code> o mantiene el foco en la ventana del examen.</li>
-        </ul>
-      </div>
-    </article>
+    <!-- 5. Enlace al Modo Avanzado (Discreto al pie) -->
+    <div style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: #64748b;">
+      ¿Sos docente o necesitás ver detalles técnicos y de telemetría? 
+      <a href="./advanced.html" style="color: var(--moodle-primary); font-weight: 600; text-decoration: underline;">
+        Ir al Modo Avanzado
+      </a>
+    </div>
 
-  </main>
+  </div>
 
-  <!-- Pie de página de Moodle -->
+  <!-- Pie de Página -->
   <footer class="moodle-footer">
-    <p>Simulador de Examen Seguro Moodle • Vanilla HTML5 / CSS3 / JavaScript puro • Compatible con GitHub Pages</p>
+    <p>Guía de Compatibilidad • Campus Virtual SIED - Universidad Nacional de San Juan (UNSJ)</p>
   </footer>
 
   <script src="./app.js"></script>

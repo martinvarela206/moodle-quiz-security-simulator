@@ -7,32 +7,101 @@
 (function () {
   'use strict';
 
-  // Identificar el contexto actual por elementos clave del DOM
+  // Detección del contexto por el ID del body
   document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('moodle-index-page')) {
-      initIndexPage();
+    if (document.getElementById('moodle-student-page')) {
+      initStudentPortal();
+    } else if (document.getElementById('moodle-advanced-page') || document.getElementById('moodle-index-page')) {
+      initAdvancedPortal();
     } else if (document.getElementById('moodle-exam-page')) {
-      initExamPage();
+      initStudentExam();
+    } else if (document.getElementById('moodle-exam-advanced-page')) {
+      initAdvancedExam();
     }
   });
 
   /* ==========================================================================
-     1. LÓGICA DE LA PÁGINA DE INICIO (index.html)
+     1. PORTAL SIMPLIFICADO PARA ESTUDIANTES (index.html)
      ========================================================================== */
-  function initIndexPage() {
+  function initStudentPortal() {
+    const btnTest = document.getElementById('btn-test-student');
+    const successBanner = document.getElementById('student-success-banner');
+    const blockedCard = document.getElementById('student-blocked-card');
+    const btnDismiss = document.getElementById('btn-dismiss-student-alert');
+
+    if (btnDismiss && blockedCard) {
+      btnDismiss.addEventListener('click', () => {
+        blockedCard.classList.remove('active');
+      });
+    }
+
+    if (btnTest) {
+      btnTest.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Parámetros oficiales de Moodle para pop-up seguro
+        const screenWidth = screen.availWidth;
+        const screenHeight = screen.availHeight;
+        const windowFeatures = [
+          `width=${screenWidth}`,
+          `height=${screenHeight}`,
+          'top=0',
+          'left=0',
+          'toolbar=no',
+          'location=no',
+          'directories=no',
+          'status=no',
+          'menubar=no',
+          'scrollbars=yes',
+          'resizable=yes',
+          'fullscreen=yes'
+        ].join(',');
+
+        let testWindow = null;
+
+        try {
+          testWindow = window.open('./exam.html', 'MoodleQuizPopup', windowFeatures);
+        } catch (err) {
+          testWindow = null;
+        }
+
+        // Detección de bloqueo de ventanas emergentes
+        if (
+          !testWindow ||
+          testWindow.closed ||
+          typeof testWindow.closed === 'undefined'
+        ) {
+          // Bloqueada por el navegador
+          if (successBanner) successBanner.classList.remove('active');
+          if (blockedCard) {
+            blockedCard.classList.add('active');
+            blockedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        } else {
+          // Abierta con éxito
+          if (blockedCard) blockedCard.classList.remove('active');
+          if (successBanner) successBanner.classList.add('active');
+          testWindow.focus();
+        }
+      });
+    }
+  }
+
+  /* ==========================================================================
+     2. PORTAL TÉCNICO AVANZADO (advanced.html)
+     ========================================================================== */
+  function initAdvancedPortal() {
     const btnStart = document.getElementById('btn-start-quiz');
     const btnTestPopup = document.getElementById('btn-test-popup');
     const popupAlert = document.getElementById('popup-blocked-alert');
     const popupIndicator = document.getElementById('popup-status-indicator');
     const popupStatusText = document.getElementById('popup-status-text');
 
-    // Comprobador activo de ventanas emergentes
     function testPopupCapability(silent = false) {
       let isAllowed = false;
       let testWin = null;
 
       try {
-        // Se intenta abrir una pequeña ventana emergente
         testWin = window.open(
           'about:blank',
           '_blank',
@@ -74,12 +143,10 @@
       });
     }
 
-    // Botón oficial de Moodle: "Intentar resolver el cuestionario"
     if (btnStart) {
       btnStart.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // Parámetros exactos que utiliza Moodle para "Ventana emergente a pantalla completa con alguna seguridad JavaScript"
         const screenWidth = screen.availWidth;
         const screenHeight = screen.availHeight;
         const windowFeatures = [
@@ -100,12 +167,11 @@
         let examPopup = null;
 
         try {
-          examPopup = window.open('./exam.html', 'MoodleQuizPopup', windowFeatures);
+          examPopup = window.open('./exam-advanced.html', 'MoodleQuizPopupAdvanced', windowFeatures);
         } catch (err) {
           examPopup = null;
         }
 
-        // Detección rigurosa de bloqueo de ventanas emergentes
         if (
           !examPopup ||
           examPopup.closed ||
@@ -121,10 +187,7 @@
             popupStatusText.style.color = 'var(--moodle-danger)';
           }
         } else {
-          // Ventana emergente permitida exitosamente
-          if (popupAlert) {
-            popupAlert.classList.remove('active');
-          }
+          if (popupAlert) popupAlert.classList.remove('active');
           if (popupIndicator && popupStatusText) {
             popupIndicator.className = 'status-dot dot-success';
             popupStatusText.textContent = 'Ventana emergente lanzada con éxito';
@@ -135,7 +198,6 @@
       });
     }
 
-    // Botón para cerrar la alerta de pop-up bloqueado
     const btnDismissAlert = document.getElementById('btn-dismiss-alert');
     if (btnDismissAlert && popupAlert) {
       btnDismissAlert.addEventListener('click', () => {
@@ -145,10 +207,66 @@
   }
 
   /* ==========================================================================
-     2. LÓGICA DE LA VENTANA DE EXAMEN (exam.html)
+     3. VENTANA DE PRUEBA AMIGABLE PARA ESTUDIANTES (exam.html)
      ========================================================================== */
-  function initExamPage() {
-    // Estado de la telemetría
+  function initStudentExam() {
+    const dock = document.getElementById('telemetry-dock');
+    const dockToggle = document.getElementById('telemetry-toggle');
+    const consoleElem = document.getElementById('telemetry-console');
+    const btnFullscreen = document.getElementById('btn-request-fullscreen');
+
+    // Asegurarse de que el dock inicie minimizado para no tapar la pantalla
+    if (dock) {
+      dock.classList.add('minimized');
+    }
+
+    if (dockToggle && dock) {
+      dockToggle.addEventListener('click', () => {
+        dock.classList.toggle('minimized');
+        const icon = dockToggle.querySelector('.toggle-icon');
+        if (icon) {
+          icon.textContent = dock.classList.contains('minimized') ? '▲' : '▼';
+        }
+      });
+    }
+
+    // Pantalla completa opcional
+    if (btnFullscreen) {
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+    }
+
+    // Registro sutil en consola técnica sin toasts estresantes
+    function logEvent(msg) {
+      if (!consoleElem) return;
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `<span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span>${msg}</span>`;
+      consoleElem.appendChild(entry);
+    }
+
+    window.addEventListener('blur', () => {
+      const statBlur = document.getElementById('stat-blur-count');
+      if (statBlur) statBlur.textContent = parseInt(statBlur.textContent || '0', 10) + 1;
+      logEvent('Ventana perdió el foco (blur)');
+    });
+
+    window.addEventListener('focus', () => {
+      logEvent('Ventana recuperó el foco');
+    });
+
+    logEvent('Ventana de prueba iniciada con éxito');
+  }
+
+  /* ==========================================================================
+     4. VENTANA TÉCNICA AVANZADA (exam-advanced.html)
+     ========================================================================== */
+  function initAdvancedExam() {
     const state = {
       blurCount: 0,
       visibilityChanges: 0,
@@ -156,12 +274,10 @@
       blockedContextMenu: 0,
       blockedSelects: 0,
       isWindowFocused: document.hasFocus(),
-      timerSeconds: 15 * 60, // 15 minutos
-      timerInterval: null,
-      isEnded: false
+      timerSeconds: 15 * 60,
+      timerInterval: null
     };
 
-    // Referencias del DOM de telemetría y HUD
     const dom = {
       dock: document.getElementById('telemetry-dock'),
       dockToggle: document.getElementById('telemetry-toggle'),
@@ -183,7 +299,6 @@
       btnFullscreen: document.getElementById('btn-request-fullscreen')
     };
 
-    // Formatear marca de tiempo precisa [HH:MM:SS.mmm]
     function getTimestamp() {
       const now = new Date();
       const h = String(now.getHours()).padStart(2, '0');
@@ -193,53 +308,36 @@
       return `[${h}:${m}:${s}.${ms}]`;
     }
 
-    // Agregar entrada a la consola de telemetría
     function logEvent(message, type = 'info') {
       if (!dom.console) return;
-
       const entry = document.createElement('div');
       entry.className = 'log-entry';
-
       const timeSpan = document.createElement('span');
       timeSpan.className = 'log-time';
       timeSpan.textContent = getTimestamp();
-
       const textSpan = document.createElement('span');
       textSpan.className = `log-type-${type}`;
       textSpan.innerHTML = message;
-
       entry.appendChild(timeSpan);
       entry.appendChild(textSpan);
       dom.console.appendChild(entry);
-
-      // Auto scroll hacia el último mensaje
       dom.console.scrollTop = dom.console.scrollHeight;
     }
 
-    // Mostrar notificación flotante (toast no intrusivo)
     function showToast(message, type = 'warning') {
       if (!dom.toastContainer) return;
-
       const toast = document.createElement('div');
       toast.className = `security-toast toast-${type}`;
       toast.innerHTML = `<span>⚠️</span> <span>${message}</span>`;
       dom.toastContainer.appendChild(toast);
-
-      // Animación de entrada
-      requestAnimationFrame(() => {
-        toast.classList.add('show');
-      });
-
-      // Retirar tras 2.8 segundos
+      requestAnimationFrame(() => toast.classList.add('show'));
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
       }, 2800);
     }
 
-    // Actualizar badges e indicadores del HUD
     function updateHUD() {
-      // Estado de foco
       state.isWindowFocused = document.hasFocus();
       if (dom.pillFocus) {
         if (state.isWindowFocused) {
@@ -251,7 +349,6 @@
         }
       }
 
-      // Estado de visibilidad
       if (dom.pillVisibility) {
         const isHidden = document.visibilityState === 'hidden';
         if (isHidden) {
@@ -263,17 +360,14 @@
         }
       }
 
-      // Contadores
       if (dom.statBlur) dom.statBlur.textContent = state.blurCount;
       if (dom.statVisibility) dom.statVisibility.textContent = state.visibilityChanges;
       if (dom.statShortcuts) dom.statShortcuts.textContent = state.blockedShortcuts;
       if (dom.statContext) dom.statContext.textContent = state.blockedContextMenu;
     }
 
-    // Detección de pantallas múltiples (API window.screen.isExtended)
     function detectMultiScreen() {
       if (!dom.pillScreen) return;
-
       if ('isExtended' in window.screen) {
         const isExtended = window.screen.isExtended;
         if (isExtended) {
@@ -285,33 +379,24 @@
           dom.pillScreen.innerHTML = '🖥️ Monitor único';
         }
       } else {
-        // Fallback para navegadores sin Window Management API
         const wide = window.screen.availWidth > 2560 || window.screen.width > 2560;
         dom.pillScreen.className = 'telemetry-pill pill-active';
         dom.pillScreen.innerHTML = wide ? '🖥️ Monitor UltraWide' : '🖥️ Monitor Estándar';
       }
     }
 
-    /* --------------------------------------------------------------------------
-       RESTRICCIONES JAVASCRIPT NATIVAS DE MOODLE
-       -------------------------------------------------------------------------- */
-
-    // 1. Bloquear menú contextual (clic derecho)
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       state.blockedContextMenu++;
       updateHUD();
-      showToast('El menú contextual (clic derecho) ha sido deshabilitado en este cuestionario.', 'danger');
+      showToast('El menú contextual (clic derecho) está deshabilitado en este cuestionario.', 'danger');
       logEvent('🚫 <strong>contextmenu</strong>: Intento de clic secundario bloqueado.', 'security');
     });
 
-    // 2. Bloquear selección de texto mediante selectstart
     document.addEventListener('selectstart', (e) => {
-      // Permitir si se trata de un input o textarea editable legítimo, aunque en este examen no hay
       if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
         e.preventDefault();
         state.blockedSelects++;
-        // No inundar con toasts continuos de selección, registrar en log
         if (state.blockedSelects % 5 === 1) {
           showToast('La selección de texto está bloqueada en la ventana segura.', 'warning');
           logEvent('🚫 <strong>selectstart</strong>: Selección de texto prevenida.', 'security');
@@ -319,17 +404,14 @@
       }
     });
 
-    // 3. Bloquear arrastre de elementos
     document.addEventListener('dragstart', (e) => {
       e.preventDefault();
     });
 
-    // 4. Interceptar y bloquear atajos de teclado
     document.addEventListener('keydown', (e) => {
       const isCtrlOrCmd = e.ctrlKey || e.metaKey;
       const key = e.key.toLowerCase();
 
-      // Teclas de función (F12, F11, etc.)
       const isF12 = e.key === 'F12';
       const isDevToolsCombo = isCtrlOrCmd && e.shiftKey && (key === 'i' || key === 'j' || key === 'c');
       const isClipboardCopy = isCtrlOrCmd && key === 'c';
@@ -359,7 +441,7 @@
 
         let label = 'Atajo';
         if (isF12) label = 'F12 (Herramientas de Desarrollador)';
-        else if (isDevToolsCombo) label = 'Ctrl+Shift+I/J/C (Inspeccionar Elemento)';
+        else if (isDevToolsCombo) label = 'Ctrl+Shift+I/J/C (Inspeccionar)';
         else if (isClipboardCopy) label = 'Ctrl+C (Copiar)';
         else if (isClipboardCut) label = 'Ctrl+X (Cortar)';
         else if (isClipboardPaste) label = 'Ctrl+V (Pegar)';
@@ -373,42 +455,34 @@
       }
     });
 
-    /* --------------------------------------------------------------------------
-       TELEMETRÍA: EVENTOS DE FOCO Y VISIBILIDAD
-       -------------------------------------------------------------------------- */
-
-    // Pérdida de foco de la ventana (window.blur)
     window.addEventListener('blur', () => {
       state.blurCount++;
       updateHUD();
-      logEvent('🔴 <strong>window.blur</strong>: La ventana perdió el foco (posible cambio de pestaña, app o clic en segundo monitor).', 'blur');
+      logEvent('🔴 <strong>window.blur</strong>: La ventana perdió el foco.', 'blur');
     });
 
-    // Recuperación de foco de la ventana (window.focus)
     window.addEventListener('focus', () => {
       updateHUD();
       logEvent('🟢 <strong>window.focus</strong>: La ventana recuperó el foco activo.', 'focus');
     });
 
-    // Cambio en la visibilidad del documento (visibilitychange)
     document.addEventListener('visibilitychange', () => {
       state.visibilityChanges++;
       updateHUD();
       if (document.visibilityState === 'hidden') {
-        logEvent(`👁️ <strong>visibilitychange</strong>: El documento pasó a estado <code>hidden</code> (pestaña minimizada o tapada).`, 'visibility');
+        logEvent('👁️ <strong>visibilitychange</strong>: El documento pasó a <code>hidden</code>.', 'visibility');
       } else {
-        logEvent(`👁️ <strong>visibilitychange</strong>: El documento pasó a estado <code>visible</code>.`, 'visibility');
+        logEvent('👁️ <strong>visibilitychange</strong>: El documento pasó a <code>visible</code>.', 'visibility');
       }
     });
 
-    // Interacción de pantalla completa
     if (dom.btnFullscreen) {
       dom.btnFullscreen.addEventListener('click', () => {
         if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen().then(() => {
-            logEvent('🖥️ Modo pantalla completa activado por el usuario.', 'info');
+            logEvent('🖥️ Modo pantalla completa activado.', 'info');
           }).catch(err => {
-            logEvent(`⚠️ Falló solicitud de pantalla completa: ${err.message}`, 'security');
+            logEvent(`⚠️ Error al solicitar pantalla completa: ${err.message}`, 'security');
           });
         } else {
           document.exitFullscreen();
@@ -416,7 +490,6 @@
       });
     }
 
-    // Toggle colapsar/expandir dock de telemetría
     if (dom.dockToggle && dom.dock) {
       dom.dockToggle.addEventListener('click', () => {
         dom.dock.classList.toggle('minimized');
@@ -427,7 +500,6 @@
       });
     }
 
-    // Botón limpiar consola
     if (dom.btnClearConsole && dom.console) {
       dom.btnClearConsole.addEventListener('click', () => {
         dom.console.innerHTML = '';
@@ -435,9 +507,6 @@
       });
     }
 
-    /* --------------------------------------------------------------------------
-       TEMPORIZADOR REGRESIVO (15:00)
-       -------------------------------------------------------------------------- */
     function startTimer() {
       function renderTimer() {
         const mins = Math.floor(state.timerSeconds / 60);
@@ -455,7 +524,6 @@
           clearInterval(state.timerInterval);
           logEvent('⏱️ <strong>Tiempo agotado</strong>: El examen ha concluido.', 'blur');
           showToast('¡El tiempo del examen ha finalizado!', 'danger');
-          openFinishModal(true);
         } else {
           state.timerSeconds--;
         }
@@ -465,70 +533,9 @@
       state.timerInterval = setInterval(renderTimer, 1000);
     }
 
-    /* --------------------------------------------------------------------------
-       GESTIÓN DE PREGUNTAS Y NAVEGACIÓN
-       -------------------------------------------------------------------------- */
-    // Marcar como respondida al hacer clic en un radio
-    const radioInputs = document.querySelectorAll('.que input[type="radio"]');
-    radioInputs.forEach(radio => {
-      radio.addEventListener('change', () => {
-        const questionCard = radio.closest('.que');
-        if (!questionCard) return;
-
-        const qId = questionCard.getAttribute('data-question-id');
-        const statusLabel = questionCard.querySelector('.status');
-        if (statusLabel) {
-          statusLabel.textContent = 'Respuesta guardada';
-          statusLabel.style.color = '#155724';
-          statusLabel.style.fontWeight = '600';
-        }
-
-        // Actualizar botón de navegación
-        const navButton = document.getElementById(`nav-btn-q${qId}`);
-        if (navButton) {
-          navButton.classList.add('answered');
-        }
-
-        logEvent(`✏️ Pregunta ${qId}: Respuesta registrada.`, 'info');
-      });
-    });
-
-    // Alternar bandera de señalización en preguntas
-    const flagButtons = document.querySelectorAll('.flag-toggle');
-    flagButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const questionCard = btn.closest('.que');
-        const qId = questionCard ? questionCard.getAttribute('data-question-id') : null;
-        const isFlagged = btn.classList.toggle('flagged');
-        const flagText = btn.querySelector('.flag-text');
-
-        if (flagText) {
-          flagText.textContent = isFlagged ? 'Quitar señalización' : 'Señalar con bandera';
-        }
-
-        if (qId) {
-          const navButton = document.getElementById(`nav-btn-q${qId}`);
-          if (navButton) {
-            navButton.classList.toggle('flagged', isFlagged);
-          }
-        }
-      });
-    });
-
-    /* --------------------------------------------------------------------------
-       MODAL DE FINALIZACIÓN Y CIERRE DE VENTANA
-       -------------------------------------------------------------------------- */
-    function openFinishModal(isTimeout = false) {
+    function openFinishModal() {
       if (!dom.modalClose) return;
-
-      const titleElem = document.getElementById('modal-finish-title');
       const statsElem = document.getElementById('modal-finish-stats');
-
-      if (titleElem) {
-        titleElem.textContent = isTimeout ? 'Tiempo concluido' : 'Finalizar intento';
-      }
-
       if (statsElem) {
         const answeredCount = document.querySelectorAll('.qnbutton.answered').length;
         statsElem.innerHTML = `
@@ -541,14 +548,13 @@
           </ul>
         `;
       }
-
       dom.modalClose.classList.add('active');
     }
 
     if (dom.btnEndQuiz) {
       dom.btnEndQuiz.addEventListener('click', (e) => {
         e.preventDefault();
-        openFinishModal(false);
+        openFinishModal();
       });
     }
 
@@ -558,20 +564,16 @@
       });
     }
 
-    // Botón definitivo: Finalizar intento y cerrar ventana
     if (dom.btnConfirmClose) {
       dom.btnConfirmClose.addEventListener('click', () => {
         clearInterval(state.timerInterval);
-        logEvent('🚪 Cerrando ventana emergente de examen (window.close)...', 'info');
         window.close();
       });
     }
 
-    // Inicializaciones al cargar la página de examen
     startTimer();
     detectMultiScreen();
     updateHUD();
-    logEvent('🚀 <strong>Sesión de examen iniciada</strong> en ventana emergente con seguridad JavaScript.', 'info');
-    logEvent(`ℹ️ Resolución actual disponible: ${screen.availWidth}x${screen.availHeight}px.`, 'info');
+    logEvent('🚀 <strong>Sesión de examen avanzada iniciada</strong>.', 'info');
   }
 })();

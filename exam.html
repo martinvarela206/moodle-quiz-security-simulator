@@ -3,170 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Examen Activo - Ventana Segura Moodle</title>
+  <title>Ventana de Prueba Exitosa - Campus Virtual UNSJ</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body id="moodle-exam-page" class="exam-mode">
 
-  <!-- Navbar Minimalista de Examen Seguro (Moodle Boost Secure Layout) -->
+  <!-- Navbar Minimalista de Examen con Aclaración Tranquilizadora -->
   <header class="exam-navbar">
     <div class="exam-navbar-title">
       <div class="moodle-logo-icon" style="width: 22px; height: 22px; font-size: 13px;">m</div>
-      <span>Cuestionario en curso: Seguridad Web y Control de Foco</span>
+      <span>Simulador de Ventana Emergente • Campus Virtual SIED (UNSJ)</span>
     </div>
     <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">
+        ✓ VENTANA ABIERTA CON ÉXITO
+      </span>
       <button id="btn-request-fullscreen" type="button" class="btn-moodle btn-moodle-secondary btn-sm" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">
         ⛶ Pantalla Completa
       </button>
-      <div class="exam-security-pill">
-        <span>🔒</span>
-        <span>MODO SEGURO JAVASCRIPT ACTIVO</span>
-      </div>
     </div>
   </header>
 
   <!-- Contenedor Principal del Examen -->
   <main class="exam-main-container">
+
+    <!-- Tarjeta de Felicitación / Éxito (Anti-Pánico Inmediato) -->
+    <section class="exam-friendly-success-card" role="status">
+      <div class="exam-friendly-success-title">
+        <span>🎉</span>
+        <span>¡Excelente! Tu navegador abrió la ventana emergente sin problemas</span>
+      </div>
+      <p style="font-size: 0.95rem; color: #166534; line-height: 1.5; margin-bottom: 0.75rem;">
+        Si estás leyendo esto, significa que <strong>tu navegador NO bloqueó las ventanas emergentes</strong>. El día del examen vas a poder ingresar al cuestionario en el Campus Virtual SIED de la UNSJ con total normalidad.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 0.75rem 1rem;">
+        <span style="font-size: 0.88rem; color: #14532d; font-weight: 600;">
+          💡 Recordatorio: Esto es solo una prueba técnica. No necesitás contestar nada.
+        </span>
+        <button type="button" class="btn-moodle btn-moodle-primary btn-sm" style="background-color: #16a34a; border-color: #15803d;" onclick="window.close();">
+          Cerrar ventana y terminar prueba
+        </button>
+      </div>
+    </section>
+
     <div class="exam-layout">
 
-      <!-- Columna Principal: Preguntas del Examen -->
-      <section class="exam-questions-col" aria-label="Preguntas del examen">
+      <!-- Columna Principal: Ejemplo Didáctico de Preguntas -->
+      <section class="exam-questions-col" aria-label="Muestra visual de preguntas">
 
-        <!-- PREGUNTA 1 -->
+        <!-- Marca de agua didáctica -->
+        <div class="exam-mock-watermark">
+          <span>ℹ️</span>
+          <span><strong>Muestra visual:</strong> Así es como verás organizadas las preguntas en Moodle el día de tu examen oficial.</span>
+        </div>
+
+        <!-- PREGUNTA DE EJEMPLO 1 -->
         <article class="que multichoice" data-question-id="1">
           <div class="info">
-            <div class="no">Pregunta 1</div>
-            <div class="status">Sin responder aún</div>
+            <div class="no">Pregunta de Muestra</div>
+            <div class="status">Ejemplo visual</div>
             <div class="grade">Puntúa como 1,00</div>
-            <button type="button" class="flag-toggle" aria-label="Señalar pregunta 1">
-              <span>⚐</span>
-              <span class="flag-text">Señalar con bandera</span>
-            </button>
           </div>
           <div class="content">
             <div class="qtext">
-              ¿Cuál es la diferencia técnica fundamental entre el evento del navegador <code>window.blur</code> y el evento <code>visibilitychange</code> (del API <em>Page Visibility</em>)?
+              ¿Cuál de las siguientes acciones es la más recomendada para el día que rindas tu examen en el Campus Virtual?
             </div>
             <div class="ablock">
               <div class="answer">
                 <label>
                   <input type="radio" name="q1" value="a">
-                  <span><strong>a.</strong> <code>window.blur</code> solo detecta cuando el usuario cierra el navegador, mientras que <code>visibilitychange</code> detecta clics de ratón.</span>
+                  <span><strong>a.</strong> Rendir desde una computadora (PC o Notebook) conectada a internet estable y con ventanas emergentes habilitadas.</span>
                 </label>
                 <label>
                   <input type="radio" name="q1" value="b">
-                  <span><strong>b.</strong> <code>window.blur</code> se dispara cuando la ventana pierde el foco activo de entrada (incluso si sigue completamente visible en pantalla), mientras que <code>visibilitychange</code> solo se activa cuando la página pasa a estar oculta por otra pestaña o minimizada.</span>
+                  <span><strong>b.</strong> Intentar rendir mientras viajás en colectivo usando el celular con poca batería.</span>
                 </label>
                 <label>
                   <input type="radio" name="q1" value="c">
-                  <span><strong>c.</strong> Ambos eventos son exactamente idénticos y se disparan al mismo tiempo en cualquier circunstancia.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q1" value="d">
-                  <span><strong>d.</strong> <code>visibilitychange</code> solo funciona en dispositivos móviles y no está disponible en navegadores de escritorio.</span>
+                  <span><strong>c.</strong> Dejar abiertas 50 pestañas y programas pesados que puedan trabar la máquina.</span>
                 </label>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- PREGUNTA 2 -->
-        <article class="que multichoice" data-question-id="2">
-          <div class="info">
-            <div class="no">Pregunta 2</div>
-            <div class="status">Sin responder aún</div>
-            <div class="grade">Puntúa como 1,00</div>
-            <button type="button" class="flag-toggle" aria-label="Señalar pregunta 2">
-              <span>⚐</span>
-              <span class="flag-text">Señalar con bandera</span>
-            </button>
-          </div>
-          <div class="content">
-            <div class="qtext">
-              En un entorno con <strong>múltiples monitores</strong> en Windows 10/11, si el estudiante tiene abierta la ventana del examen en el monitor principal y hace scroll con la rueda del ratón sobre un documento PDF en el monitor secundario <em>sin hacer clic</em>:
-            </div>
-            <div class="ablock">
-              <div class="answer">
-                <label>
-                  <input type="radio" name="q2" value="a">
-                  <span><strong>a.</strong> La ventana del examen pierde el foco de inmediato y se dispara <code>window.blur</code>.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q2" value="b">
-                  <span><strong>b.</strong> Por la directiva de Windows de "desplazar ventanas inactivas al pasar el cursor", el scroll ocurre en la segunda ventana pero la ventana del examen <strong>mantiene el foco</strong> (no se dispara <code>window.blur</code> hasta que el usuario hace clic en el segundo monitor).</span>
-                </label>
-                <label>
-                  <input type="radio" name="q2" value="c">
-                  <span><strong>c.</strong> El navegador bloquea automáticamente el hardware del segundo monitor mediante la API de pantalla.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q2" value="d">
-                  <span><strong>d.</strong> Moodle redirige al usuario a la página de inicio de sesión.</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- PREGUNTA 3 -->
-        <article class="que multichoice" data-question-id="3">
-          <div class="info">
-            <div class="no">Pregunta 3</div>
-            <div class="status">Sin responder aún</div>
-            <div class="grade">Puntúa como 1,00</div>
-            <button type="button" class="flag-toggle" aria-label="Señalar pregunta 3">
-              <span>⚐</span>
-              <span class="flag-text">Señalar con bandera</span>
-            </button>
-          </div>
-          <div class="content">
-            <div class="qtext">
-              ¿Por qué la opción de Moodle <em>"alguna seguridad JavaScript"</em> es considerada una medida de disuasión básica y no un entorno de evaluación blindado (como Safe Exam Browser)?
-            </div>
-            <div class="ablock">
-              <div class="answer">
-                <label>
-                  <input type="radio" name="q3" value="a">
-                  <span><strong>a.</strong> Porque se ejecuta en el espacio del cliente (JavaScript en el navegador), donde el usuario tiene control del entorno, puede usar atajos del sistema operativo, extensiones, o simplemente deshabilitar scripts.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q3" value="b">
-                  <span><strong>b.</strong> Porque Moodle no permite calificar exámenes realizados con esta opción.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q3" value="c">
-                  <span><strong>c.</strong> Porque solo funciona si el servidor de Moodle está configurado en Linux.</span>
-                </label>
-                <label>
-                  <input type="radio" name="q3" value="d">
-                  <span><strong>d.</strong> Porque no existe ninguna limitación real y JavaScript ofrece seguridad absoluta contra capturas de pantalla.</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Botón de acción al pie de preguntas -->
-        <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-          <button id="btn-finish-attempt" type="button" class="btn-moodle btn-moodle-primary">
-            Terminar intento...
+        <!-- Botón de Cierre Amigable al pie -->
+        <div style="display: flex; justify-content: center; margin: 2rem 0;">
+          <button id="btn-finish-friendly" type="button" class="btn-hero-test" style="font-size: 1rem; padding: 0.75rem 1.75rem;" onclick="window.close();">
+            <span>✅</span>
+            <span>Listo, cerrar esta ventana de prueba</span>
           </button>
         </div>
 
       </section>
 
-      <!-- Columna Lateral: Navegación del Cuestionario y Temporizador -->
+      <!-- Columna Lateral: Navegación y Reloj Didáctico -->
       <aside class="exam-sidebar" aria-label="Bloques laterales del examen">
         
-        <!-- Bloque del Temporizador -->
+        <!-- Bloque del Temporizador (Didáctico, Anti-Pánico) -->
         <div class="sidebar-box">
           <div class="sidebar-title">
             <span>⏱️</span>
-            <span>Tiempo restante</span>
+            <span>Reloj del Examen (Ejemplo)</span>
           </div>
-          <div class="timer-container">
+          <div class="timer-container" style="color: #1e293b;">
             <span id="quiz-timer-display">15:00</span>
           </div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; line-height: 1.3;">
+            El día del examen verás una cuenta regresiva como esta indicándote el tiempo restante. <em>En esta prueba no te preocupes, no se vence nada.</em>
+          </p>
         </div>
 
         <!-- Bloque de Navegación por Preguntas -->
@@ -180,21 +125,12 @@
               <span class="thispageholder">1</span>
               <span class="trafficlight"></span>
             </a>
-            <a href="#q2" id="nav-btn-q2" class="qnbutton" title="Pregunta 2">
-              <span class="thispageholder">2</span>
-              <span class="trafficlight"></span>
-            </a>
-            <a href="#q3" id="nav-btn-q3" class="qnbutton" title="Pregunta 3">
-              <span class="thispageholder">3</span>
-              <span class="trafficlight"></span>
-            </a>
           </div>
           <div style="font-size: 0.75rem; color: var(--moodle-text-muted); margin-bottom: 0.75rem;">
-            Mitad inferior gris = Respuesta guardada.<br>
-            Triángulo rojo = Señalizada.
+            En tu examen real, cada recuadro representará una pregunta para que puedas navegar fácilmente entre ellas.
           </div>
-          <button id="btn-finish-attempt-side" type="button" class="btn-moodle btn-moodle-secondary btn-sm" style="width: 100%;" onclick="document.getElementById('btn-finish-attempt').click();">
-            Terminar intento...
+          <button type="button" class="btn-moodle btn-moodle-secondary btn-sm" style="width: 100%;" onclick="window.close();">
+            Cerrar prueba
           </button>
         </div>
 
@@ -206,23 +142,23 @@
   <!-- Contenedor de Toasts Flotantes para Alertas de Seguridad -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-  <!-- Panel de Diagnóstico Técnico (Telemetría en Vivo) -->
-  <section id="telemetry-dock" class="telemetry-dock" aria-label="Panel de diagnóstico técnico en vivo">
+  <!-- Panel de Diagnóstico Técnico (Telemetría en Vivo) - MINIMIZADO POR DEFECTO PARA NO ABARROTAR LA PANTALLA -->
+  <section id="telemetry-dock" class="telemetry-dock minimized" aria-label="Panel de diagnóstico técnico en vivo">
     <!-- Encabezado del Dock -->
     <div id="telemetry-toggle" class="telemetry-dock-header">
       <div class="telemetry-title">
         <span>📡</span>
-        <span>Telemetría y Diagnóstico de Seguridad en Vivo</span>
+        <span>Datos Técnicos de Pantalla y Foco (Opcional para docentes)</span>
       </div>
       <div class="telemetry-live-pills">
         <span id="pill-focus-status" class="telemetry-pill pill-active">● Foco ACTIVO</span>
         <span id="pill-vis-status" class="telemetry-pill pill-active">👁️ Visible</span>
         <span id="pill-screen-status" class="telemetry-pill pill-active">🖥️ Monitor</span>
-        <span class="toggle-icon" style="color: #94a3b8; font-size: 0.75rem; margin-left: 0.5rem;">▼</span>
+        <span class="toggle-icon" style="color: #94a3b8; font-size: 0.75rem; margin-left: 0.5rem;">▲</span>
       </div>
     </div>
 
-    <!-- Contenido del Dock -->
+    <!-- Contenido del Dock (Colapsado por defecto) -->
     <div class="telemetry-body">
       <!-- Estadísticas de Eventos -->
       <div class="telemetry-stats-grid">
@@ -247,7 +183,7 @@
       <!-- Consola de Logs en Tiempo Real -->
       <div class="telemetry-console-wrapper">
         <div class="telemetry-console-header">
-          <span>Registro de Eventos de Seguridad (Event Stream):</span>
+          <span>Registro de Eventos (Opcional):</span>
           <button id="btn-clear-console" type="button" class="btn-moodle btn-moodle-secondary btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.5rem; background: #1e293b; color: #cbd5e1; border-color: #475569;">
             Limpiar registro
           </button>
@@ -257,38 +193,18 @@
         </div>
       </div>
 
-      <!-- Nota Técnica sobre el Comportamiento de Foco y Multimonitor -->
       <div class="telemetry-info-note">
         <div>
-          💡 <strong>Prueba de foco en segundo monitor:</strong> Desplace el cursor a una ventana de otra pantalla y mueva la rueda de scroll (sin hacer clic). Observará que el foco se mantiene intacto hasta que haga clic en otra aplicación o presione <code>Alt+Tab</code>.
+          💡 Panel técnico informativo. En dispositivos móviles podés dejarlo cerrado tocando la barra superior.
         </div>
         <div>
-          <button type="button" class="btn-moodle btn-moodle-danger btn-sm" onclick="document.getElementById('btn-finish-attempt').click();">
-            Cerrar intento y ventana
+          <button type="button" class="btn-moodle btn-moodle-danger btn-sm" onclick="window.close();">
+            Cerrar ventana
           </button>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Modal de Confirmación de Finalización de Examen -->
-  <div id="modal-finish-quiz" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-finish-title">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <span id="modal-finish-title">Resumen del Intento</span>
-      </div>
-      <div class="modal-body">
-        <p>¿Está seguro de que desea enviar y finalizar este intento?</p>
-        <div id="modal-finish-stats" style="margin-top: 0.75rem; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 0.75rem;">
-          <!-- Estadísticas inyectadas por app.js -->
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-cancel-close" type="button" class="btn-moodle btn-moodle-secondary">Continuar con el examen</button>
-        <button id="btn-confirm-close" type="button" class="btn-moodle btn-moodle-danger">Finalizar intento y cerrar ventana</button>
-      </div>
-    </div>
-  </div>
 
   <script src="./app.js"></script>
 </body>
